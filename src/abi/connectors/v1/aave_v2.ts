@@ -1,7 +1,8 @@
-// import { AbiItem } from 'web3-utils';
-import { AbiItem } from "../../../utils/types";
+/* eslint-disable camelcase */
+// // import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const aave_v2: AbiItem[] = [
+export const aave_v2: ContractInterface = [
   {
     anonymous: false,
     inputs: [
@@ -9,35 +10,35 @@ export const aave_v2: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'tokenAmt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: true,
         internalType: 'uint256',
         name: 'rateMode',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'LogBorrow',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -46,29 +47,29 @@ export const aave_v2: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'tokenAmt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'LogDeposit',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -77,11 +78,11 @@ export const aave_v2: AbiItem[] = [
         indexed: false,
         internalType: 'address[]',
         name: 'tokens',
-        type: 'address[]',
-      },
+        type: 'address[]'
+      }
     ],
     name: 'LogEnableCollateral',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -90,35 +91,35 @@ export const aave_v2: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'tokenAmt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: true,
         internalType: 'uint256',
         name: 'rateMode',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'LogPayback',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -127,29 +128,29 @@ export const aave_v2: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'tokenAmt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         indexed: false,
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'LogWithdraw',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [
@@ -157,50 +158,50 @@ export const aave_v2: AbiItem[] = [
       { internalType: 'uint256', name: 'amt', type: 'uint256' },
       { internalType: 'uint256', name: 'rateMode', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'borrow',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'connectorID',
     outputs: [
       { internalType: 'uint256', name: 'model', type: 'uint256' },
-      { internalType: 'uint256', name: 'id', type: 'uint256' },
+      { internalType: 'uint256', name: 'id', type: 'uint256' }
     ],
     stateMutability: 'pure',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       { internalType: 'address', name: 'token', type: 'address' },
       { internalType: 'uint256', name: 'amt', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'deposit',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: 'address[]', name: 'tokens', type: 'address[]' },
+      { internalType: 'address[]', name: 'tokens', type: 'address[]' }
     ],
     name: 'enableCollateral',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'name',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -208,23 +209,23 @@ export const aave_v2: AbiItem[] = [
       { internalType: 'uint256', name: 'amt', type: 'uint256' },
       { internalType: 'uint256', name: 'rateMode', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'payback',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       { internalType: 'address', name: 'token', type: 'address' },
       { internalType: 'uint256', name: 'amt', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'withdraw',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
-  },
-];
+    type: 'function'
+  }
+]

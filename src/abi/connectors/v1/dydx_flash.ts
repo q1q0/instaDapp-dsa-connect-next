@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const dydx_flash: AbiItem[] = [
+export const dydx_flash: ContractInterface = [
   {
     anonymous: false,
     inputs: [

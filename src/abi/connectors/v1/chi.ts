@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const chi: AbiItem[] = [
+export const chi: ContractInterface = [
   {
     inputs: [{ internalType: 'uint256', name: 'amt', type: 'uint256' }],
     name: 'burn',

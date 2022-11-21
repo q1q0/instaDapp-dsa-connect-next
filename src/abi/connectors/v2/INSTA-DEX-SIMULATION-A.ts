@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const INSTA_DEX_SIMULATION_A: AbiItem[] = [
+export const INSTA_DEX_SIMULATION_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [

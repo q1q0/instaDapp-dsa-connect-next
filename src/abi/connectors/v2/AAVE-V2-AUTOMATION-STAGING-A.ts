@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const AAVE_V2_AUTOMATION_STAGING_A: AbiItem[] = [
+export const AAVE_V2_AUTOMATION_STAGING_A: ContractInterface = [
   { anonymous: false, inputs: [], name: 'LogCancelAutomation', type: 'event' },
   {
     anonymous: false,

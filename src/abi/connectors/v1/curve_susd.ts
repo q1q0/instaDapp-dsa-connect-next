@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const curve_susd: AbiItem[] = [
+export const curve_susd: ContractInterface = [
   {
     inputs: [],
     name: 'connectorID',

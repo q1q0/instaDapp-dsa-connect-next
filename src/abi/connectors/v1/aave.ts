@@ -1,34 +1,34 @@
-// import { AbiItem } from 'web3-utils'
-import { AbiItem } from "../../../utils/types"
+// // import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const aave: AbiItem[] = [
+export const aave: ContractInterface = [
   {
     inputs: [
       {
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'uint256',
         name: 'amt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'borrow',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -37,44 +37,44 @@ export const aave: AbiItem[] = [
       {
         internalType: 'uint256',
         name: 'model',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'id',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'pure',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'uint256',
         name: 'amt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'deposit',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -83,66 +83,66 @@ export const aave: AbiItem[] = [
       {
         internalType: 'string',
         name: '',
-        type: 'string',
-      },
+        type: 'string'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'uint256',
         name: 'amt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'payback',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'token',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'uint256',
         name: 'amt',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'getId',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'setId',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'withdraw',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

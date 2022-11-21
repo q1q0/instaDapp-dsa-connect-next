@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const UBIQUITY_A: AbiItem[] = [
+export const UBIQUITY_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [
@@ -11,10 +12,10 @@ export const UBIQUITY_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'lpAmount', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'durationWeeks', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'LogDeposit',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -26,10 +27,10 @@ export const UBIQUITY_A: AbiItem[] = [
       { indexed: true, internalType: 'address', name: 'token', type: 'address' },
       { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'LogWithdraw',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [
@@ -37,36 +38,36 @@ export const UBIQUITY_A: AbiItem[] = [
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
       { internalType: 'uint256', name: 'durationWeeks', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'deposit',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'name',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       { internalType: 'uint256', name: 'bondingShareId', type: 'uint256' },
       { internalType: 'address', name: 'token', type: 'address' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'withdraw',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

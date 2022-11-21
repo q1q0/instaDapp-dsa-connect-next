@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const curve_gauge: AbiItem[] = [
+export const curve_gauge: ContractInterface = [
   {
     anonymous: false,
     inputs: [

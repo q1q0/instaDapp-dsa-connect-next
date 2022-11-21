@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const gelato: AbiItem[] = [
+export const gelato: ContractInterface = [
   {
     inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
     stateMutability: "nonpayable",

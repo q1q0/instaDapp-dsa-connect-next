@@ -2,7 +2,7 @@ import {
     AbiItem
 } from 'web3-utils'
 
-export const EULER_IMPORT_A: AbiItem[] = [{
+export const EULER_IMPORT_A: ContractInterface = [{
     "inputs": [{
         "internalType": "address",
         "name": "primary",

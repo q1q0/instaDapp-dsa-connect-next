@@ -1,5 +1,19 @@
-import Web3 from 'web3'
-import { TransactionConfig } from 'web3-core'
+/* eslint-disable object-shorthand */
+/* eslint-disable no-extra-boolean-cast */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable require-await */
+/* eslint-disable curly */
+/* eslint-disable quotes */
+/* eslint-disable lines-between-class-members */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable camelcase */
+
+// import Web3 from 'provider'
+import { utils } from 'ethers'
+import { Web3Provider, JsonRpcProvider } from '@ethersproject/providers'
+import { TransactionRequest } from '@ethersproject/abstract-provider'
+import { Contract } from '@ethersproject/contracts'
+// import { TransactionConfig } from 'web3-core'
 import { Abi } from './abi'
 import { Accounts } from './accounts'
 import { CastHelpers } from './cast-helpers'
@@ -15,17 +29,17 @@ import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
   | {
-    web3: Web3
+    provider: Web3Provider | JsonRpcProvider
     mode: 'node'
     privateKey: string
   }
   | {
-    web3: Web3
+    provider: Web3Provider | JsonRpcProvider
     mode: 'simulation'
     publicKey: string
   }
   | {
-    web3: Web3
+    provider: Web3Provider | JsonRpcProvider
     mode?: 'browser'
   }
 
@@ -55,8 +69,7 @@ type CastParams = {
   spells: Spells
   origin?: string
 } & TransactionCallbacks &
-  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
-
+  Pick<TransactionRequest, 'from' | 'to' | 'value' | 'gasLimit' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
 /**
  * @param _d.castData cast calldata
@@ -74,7 +87,7 @@ type CastDataParams = {
   castData: string
   origin?: string
 } & TransactionCallbacks &
-  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
+  Pick<TransactionRequest, 'from' | 'to' | 'value' | 'gasLimit' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
 /**
  * @param {address} _d.authority (optional)
@@ -92,14 +105,14 @@ type BuildParams = {
   origin?: string
   version?: Instance['version']
 } & TransactionCallbacks &
-  Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
+  Pick<TransactionRequest, 'from' | 'gasLimit' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
 export class DSA {
   static readonly version: string = '__REPLACE_VERSION__'
   readonly config: DSAConfig
 
-  get web3() {
-    return this.config.web3
+  get provider() {
+    return this.config.provider
   }
   // eslint-disable-next-line lines-between-class-members
   get mode() {
@@ -151,15 +164,15 @@ export class DSA {
   }
 
   /**
-   * @param config A `web3` instance or a DSAConfig
+   * @param config A `provider` instance or a DSAConfig
    */
-  constructor(config: Web3 | DSAConfig, chainId: ChainId = 1) {
+  constructor(config: Web3Provider | DSAConfig, chainId: ChainId = 1) {
     this.instance.chainId = chainId
     this.config = getDSAConfig(config)
-    this.config.web3.eth.getChainId().then((_chainId: any) => {
+    this.config.provider.getSigner().getChainId().then((_chainId: any) => {
       if (this.instance.chainId !== _chainId) {
         throw new Error(
-          `chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`
+          `chainId doesn't match with the provider. Initiate 'dsa' like this: 'const dsa = new DSA(provider, chainId)'`
         )
       }
 
@@ -190,15 +203,15 @@ export class DSA {
    * Refreshes the chain Id and sets it on the instance
    */
   public async refreshChainId() {
-    const chainId = (await this.web3.eth.getChainId()) as ChainId
+    const chainId = (await this.provider.getSigner().getChainId()) as ChainId
     this.instance.chainId = chainId
   }
 
   public async getAccountIdDetails(instanceId: Instance['id']) {
     try {
-      const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core[this.instance.chainId].read)
+      const contract = new Contract(Addresses.core[this.instance.chainId].read, Abi.core.read, this.provider.getSigner())
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
-      const chainId = await this.web3.eth.getChainId()
+      const chainId = await this.provider.getSigner().getChainId()
 
       return {
         id,
@@ -241,7 +254,7 @@ export class DSA {
     const mergedParams = Object.assign(defaults, params) as BuildParams
 
     const to = Addresses.core[this.instance.chainId].index
-    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
+    const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
     const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
     if (!mergedParams.from) throw new Error("Parameter 'from' is not defined.")
@@ -250,7 +263,7 @@ export class DSA {
       from: mergedParams.from,
       to,
       data,
-      gas: mergedParams.gas,
+      gas: mergedParams.gasLimit,
       gasPrice: mergedParams.gasPrice,
       maxFeePerGas: mergedParams.maxFeePerGas,
       maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
@@ -273,7 +286,7 @@ export class DSA {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
 
     const to = Addresses.core[this.instance.chainId].index
-    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
+    const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
     const data = contract.methods
       .build(params.authority, params.version || 2, params.origin || Addresses.genesis)
       .encodeABI()
@@ -303,7 +316,7 @@ export class DSA {
     params: {
       authority?: string
       origin?: string
-    } & Pick<TransactionConfig, 'from' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'gas' | 'nonce'>
+    } & Pick<TransactionRequest, 'from' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'gas' | 'nonce'>
   ) {
     const defaultAddress = await this.internal.getAddress()
 
@@ -319,7 +332,7 @@ export class DSA {
 
     const to = Addresses.core[this.instance.chainId].index
 
-    const contracts = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
+    const contracts = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
     const data = contracts.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
     const transactionConfig = await this.internal.getTransactionConfig({
@@ -426,8 +439,8 @@ export class DSA {
     })
 
     return transaction
-  } 
-  
+  }
+
   async castData(params: string | CastDataParams) {
     const defaults = {
       to: this.instance.address,
@@ -435,7 +448,7 @@ export class DSA {
       origin: this.origin
     }
 
-    const mergedParams = Object.assign(defaults, typeof params === "string" ? {castData: params} : params) as CastDataParams
+    const mergedParams = Object.assign(defaults, typeof params === "string" ? { castData: params } : params) as CastDataParams
 
     if (!mergedParams.from) throw new Error(`Parameter 'from' is not defined.`)
     if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
@@ -467,7 +480,7 @@ export class DSA {
   private async getData(params: { spells: Spells; origin?: string }) {
     const encodedSpells = this.internal.encodeSpells(params)
 
-    const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
+    const contract = new Contract(this.instance.address, Abi.core.versions[this.instance.version].account, this.provider.getSigner())
     const data = contract.methods
       .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
       .encodeABI()
@@ -478,41 +491,41 @@ export class DSA {
 
 // Used defined Typeguard
 // https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
-function isWeb3(config: Web3 | DSAConfig): config is Web3 {
-  return !!(config as Web3).version
+function isEthers(config: Web3Provider | DSAConfig): config is Web3Provider {
+  return !!(config as Web3Provider).connection
 }
 
-function getDSAConfig(config: Web3 | DSAConfig): DSAConfig {
-  if (!config) throw new Error('Invalid config. Pass web3 instance or DSAConfig.')
+function getDSAConfig(config: Web3Provider | DSAConfig): DSAConfig {
+  if (!config) throw new Error('Invalid config. Pass provider instance or DSAConfig.')
 
-  if (isWeb3(config)) return { web3: config, mode: 'browser' }
+  if (isEthers(config)) return { provider: config, mode: 'browser' }
 
-  if (!config.web3) throw new Error('Invalid config. Pass web3 instance or DSAConfig.')
+  if (!config.provider) throw new Error('Invalid config. Pass provider instance or DSAConfig.')
 
   if (config.mode === 'node') {
     if (!config.privateKey) throw new Error(`Property 'privateKey' is not defined in config.`)
 
-    const privateKey = config.privateKey.slice(0, 2) != '0x' ? '0x' + config.privateKey : config.privateKey
+    const privateKey = config.privateKey.slice(0, 2) !== '0x' ? '0x' + config.privateKey : config.privateKey
 
     return {
-      web3: config.web3,
+      provider: config.provider,
       mode: config.mode,
       privateKey
     }
   } else if (config.mode === 'simulation') {
     if (!config.publicKey) throw new Error(`Property 'publicKey' is not defined in config.`)
-    if (!config.web3.utils.isAddress(config.publicKey.toLowerCase()))
+    if (!utils.isAddress(config.publicKey.toLowerCase()))
       throw new Error(`Property 'publicKey' is not a address.`)
 
-    const publicKey = config.web3.utils.toChecksumAddress(config.publicKey.toLowerCase())
+    const publicKey = utils.getAddress(config.publicKey.toLowerCase())
     return {
-      web3: config.web3,
+      provider: config.provider,
       mode: 'simulation',
       publicKey: publicKey
     }
   } else if (!config.mode || config.mode === 'browser') {
     return {
-      web3: config.web3,
+      provider: config.provider,
       mode: 'browser'
     }
   } else {

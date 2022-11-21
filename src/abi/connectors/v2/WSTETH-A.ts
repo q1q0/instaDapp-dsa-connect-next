@@ -2,7 +2,7 @@ import {
     AbiItem
 } from 'web3-utils'
 
-export const WSTETH_A: AbiItem[] = [{
+export const WSTETH_A: ContractInterface = [{
     "inputs": [{
         "internalType": "uint256",
         "name": "stethAmt",

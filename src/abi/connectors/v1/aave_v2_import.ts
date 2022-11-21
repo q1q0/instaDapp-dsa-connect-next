@@ -1,6 +1,7 @@
-import { AbiItem } from "../../../utils/types";
+/* eslint-disable camelcase */
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const aave_v2_import: AbiItem[] = [
+export const aave_v2_import: ContractInterface = [
   {
     inputs: [],
     name: 'connectorID',
@@ -8,39 +9,39 @@ export const aave_v2_import: AbiItem[] = [
       {
         internalType: 'uint256',
         name: 'model',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'id',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'pure',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'userAccount',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'address[]',
         name: 'tokens',
-        type: 'address[]',
+        type: 'address[]'
       },
       {
         internalType: 'bool',
         name: 'convertStable',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     name: 'importAave',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -49,10 +50,10 @@ export const aave_v2_import: AbiItem[] = [
       {
         internalType: 'string',
         name: '',
-        type: 'string',
-      },
+        type: 'string'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-];
+    type: 'function'
+  }
+]

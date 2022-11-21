@@ -1,7 +1,7 @@
-// import { AbiItem } from 'web3-utils'
-import { AbiItem } from "../../../utils/types"
+// // import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const authority: AbiItem[] = [
+export const authority: ContractInterface = [
   {
     anonymous: false,
     inputs: [
@@ -9,17 +9,17 @@ export const authority: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: '_msgSender',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: true,
         internalType: 'address',
         name: '_authority',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'LogAddAuth',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -28,30 +28,30 @@ export const authority: AbiItem[] = [
         indexed: true,
         internalType: 'address',
         name: '_msgSender',
-        type: 'address',
+        type: 'address'
       },
       {
         indexed: true,
         internalType: 'address',
         name: '_authority',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'LogRemoveAuth',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'authority',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'add',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -60,16 +60,16 @@ export const authority: AbiItem[] = [
       {
         internalType: 'uint256',
         name: '_type',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_id',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'pure',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -78,23 +78,23 @@ export const authority: AbiItem[] = [
       {
         internalType: 'string',
         name: '',
-        type: 'string',
-      },
+        type: 'string'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'authority',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'remove',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

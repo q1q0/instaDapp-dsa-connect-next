@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const oasis: AbiItem[] = [
+export const oasis: ContractInterface = [
   {
     anonymous: false,
     inputs: [

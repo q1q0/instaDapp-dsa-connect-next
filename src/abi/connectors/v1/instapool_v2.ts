@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const instapool_v2: AbiItem[] = [
+export const instapool_v2: ContractInterface = [
   {
     anonymous: false,
     inputs: [

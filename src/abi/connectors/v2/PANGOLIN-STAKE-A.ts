@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const PANGOLIN_STAKE_A: AbiItem[] = [
+export const PANGOLIN_STAKE_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [

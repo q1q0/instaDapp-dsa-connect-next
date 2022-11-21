@@ -1,12 +1,13 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const PARASWAP_A: AbiItem[] = [
+export const PARASWAP_A: ContractInterface = [
   {
     inputs: [],
     name: 'name',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -15,14 +16,14 @@ export const PARASWAP_A: AbiItem[] = [
       { internalType: 'uint256', name: 'sellAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'unitAmt', type: 'uint256' },
       { internalType: 'bytes', name: 'callData', type: 'bytes' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'swap',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

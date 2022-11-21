@@ -1,7 +1,8 @@
 import { expect, it, describe, beforeAll, vi } from 'vitest'
 import { config } from 'dotenv'
 import waitForExpect from 'wait-for-expect'
-import Web3 from 'web3'
+import { Web3Provider, JsonRpcProvider } from '@ethersproject/providers'
+// import Web3 from 'web3'
 // import hre from 'hardhat'
 // import '@nomiclabs/hardhat-ethers'
 // import '@nomiclabs/hardhat-web3'
@@ -9,7 +10,7 @@ import DSA from '../src'
 
 config()
 
-let web3: Web3
+let web3: JsonRpcProvider
 let dsa: DSA
 let account: string
 
@@ -18,7 +19,7 @@ const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 const daiAddr = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
 
 beforeAll(() => {
-  web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+  web3 = new JsonRpcProvider('http://localhost:8545')
   dsa = new DSA(web3)
 })
 

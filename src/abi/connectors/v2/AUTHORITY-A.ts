@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const AUTHORITY_A: AbiItem[] = [
+export const AUTHORITY_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [

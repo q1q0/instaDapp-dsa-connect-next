@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const NOTIONAL_V2_A: AbiItem[] = [
+export const NOTIONAL_V2_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [{ indexed: true, internalType: 'address', name: 'account', type: 'address' }],

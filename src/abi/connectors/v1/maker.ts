@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const maker: AbiItem[] = [
+export const maker: ContractInterface = [
   {
     anonymous: false,
     inputs: [

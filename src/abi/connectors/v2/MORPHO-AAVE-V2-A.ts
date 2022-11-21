@@ -2,7 +2,7 @@ import {
     AbiItem
 } from 'web3-utils'
 
-export const MORPHO_AAVE_V2_A: AbiItem[] = [{
+export const MORPHO_AAVE_V2_A: ContractInterface = [{
     "anonymous": false,
     "inputs": [{
         "indexed": false,

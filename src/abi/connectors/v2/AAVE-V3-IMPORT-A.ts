@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const AAVE_V3_IMPORT_A: AbiItem[] = [
+export const AAVE_V3_IMPORT_A: ContractInterface = [
   {
     inputs: [
       { internalType: 'address', name: 'userAccount', type: 'address' },

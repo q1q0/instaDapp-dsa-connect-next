@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const SUSHISWAP_A: AbiItem[] = [
+export const SUSHISWAP_A: ContractInterface = [
   {
     anonymous: false,
     inputs: [
@@ -9,10 +10,10 @@ export const SUSHISWAP_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'buyAmt', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'sellAmt', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'LogBuy',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -23,10 +24,10 @@ export const SUSHISWAP_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'amtB', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'uniAmount', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'LogDepositLiquidity',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -36,10 +37,10 @@ export const SUSHISWAP_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'buyAmt', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'sellAmt', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'LogSell',
-    type: 'event',
+    type: 'event'
   },
   {
     anonymous: false,
@@ -50,10 +51,10 @@ export const SUSHISWAP_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'amountB', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'uniAmount', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256[]', name: 'setId', type: 'uint256[]' },
+      { indexed: false, internalType: 'uint256[]', name: 'setId', type: 'uint256[]' }
     ],
     name: 'LogWithdrawLiquidity',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [
@@ -62,15 +63,15 @@ export const SUSHISWAP_A: AbiItem[] = [
       { internalType: 'uint256', name: 'buyAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'unitAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'buy',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -80,22 +81,22 @@ export const SUSHISWAP_A: AbiItem[] = [
       { internalType: 'uint256', name: 'unitAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'slippage', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'deposit',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'name',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -104,15 +105,15 @@ export const SUSHISWAP_A: AbiItem[] = [
       { internalType: 'uint256', name: 'sellAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'unitAmt', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' }
     ],
     name: 'sell',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -122,14 +123,14 @@ export const SUSHISWAP_A: AbiItem[] = [
       { internalType: 'uint256', name: 'unitAmtA', type: 'uint256' },
       { internalType: 'uint256', name: 'unitAmtB', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
-      { internalType: 'uint256[]', name: 'setIds', type: 'uint256[]' },
+      { internalType: 'uint256[]', name: 'setIds', type: 'uint256[]' }
     ],
     name: 'withdraw',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
-      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' }
     ],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

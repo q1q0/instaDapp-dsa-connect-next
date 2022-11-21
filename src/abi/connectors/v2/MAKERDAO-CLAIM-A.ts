@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const MAKERDAO_CLAIM_A: AbiItem[] = [
+export const MAKERDAO_CLAIM_A: ContractInterface = [
     {
       "inputs": [
         {

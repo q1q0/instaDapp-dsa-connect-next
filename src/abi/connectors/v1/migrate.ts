@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const migrate: AbiItem[] = [
+export const migrate: ContractInterface = [
   {
     inputs: [],
     name: 'connectorID',

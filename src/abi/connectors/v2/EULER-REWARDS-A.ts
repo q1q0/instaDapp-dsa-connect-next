@@ -2,7 +2,7 @@ import {
     AbiItem
 } from 'web3-utils'
 
-export const EULER_REWARDS_A: AbiItem[] = [
+export const EULER_REWARDS_A: ContractInterface = [
 {
     "anonymous": false,
     "inputs": [{

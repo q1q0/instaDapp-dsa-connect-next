@@ -1,6 +1,7 @@
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
-export const events: AbiItem[] = [
+export const events: ContractInterface = [
   {
     anonymous: false,
     inputs: [
@@ -8,63 +9,63 @@ export const events: AbiItem[] = [
         indexed: false,
         internalType: 'uint64',
         name: 'connectorType',
-        type: 'uint64',
+        type: 'uint64'
       },
       {
         indexed: true,
         internalType: 'uint64',
         name: 'connectorID',
-        type: 'uint64',
+        type: 'uint64'
       },
       {
         indexed: true,
         internalType: 'uint64',
         name: 'accountID',
-        type: 'uint64',
+        type: 'uint64'
       },
       {
         indexed: true,
         internalType: 'bytes32',
         name: 'eventCode',
-        type: 'bytes32',
+        type: 'bytes32'
       },
       {
         indexed: false,
         internalType: 'bytes',
         name: 'eventData',
-        type: 'bytes',
-      },
+        type: 'bytes'
+      }
     ],
     name: 'LogEvent',
-    type: 'event',
+    type: 'event'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_connectorType',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_connectorID',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'bytes32',
         name: '_eventCode',
-        type: 'bytes32',
+        type: 'bytes32'
       },
       {
         internalType: 'bytes',
         name: '_eventData',
-        type: 'bytes',
-      },
+        type: 'bytes'
+      }
     ],
     name: 'emitEvent',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -73,10 +74,10 @@ export const events: AbiItem[] = [
       {
         internalType: 'address',
         name: '',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ]

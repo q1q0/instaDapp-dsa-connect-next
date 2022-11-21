@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "target": "es2020",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "strict": true
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "lib": [],
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "types": [
+      "vitest/importMeta"
+    ],
+    "skipLibCheck": true
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }

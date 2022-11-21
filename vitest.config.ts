@@ -5,6 +5,7 @@ export default defineConfig({
     entries: []
   },
   test: {
-    setupFiles: ['./test/index.test.ts']
+    setupFiles: ['./test/index.test.ts'],
+    testTimeout: 300000
   }
 })

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { AAVE_CLAIM_A } from './AAVE-CLAIM-A'
 import { AAVE_CLAIM_B } from './AAVE-CLAIM-B'
 import { AAVE_STAKE_A } from './AAVE-STAKE-A'
@@ -198,5 +199,5 @@ export const connectorsV2_M1 = {
   'WMATIC-A': WMATIC_A,
   'WAVAX-A': WAVAX_A,
   'UNIVERSE-A': UNIVERSE_A,
-  'UBIQUITY-A': UBIQUITY_A,
+  'UBIQUITY-A': UBIQUITY_A
 }

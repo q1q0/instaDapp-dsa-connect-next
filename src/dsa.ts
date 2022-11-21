@@ -295,7 +295,7 @@ export class DSA {
       from: params.from,
       to,
       data,
-      gas: params.gas,
+      gas: params.gasLimit,
       gasPrice: params.gasPrice,
       maxFeePerGas: params.maxFeePerGas,
       maxPriorityFeePerGas: params.maxPriorityFeePerGas,
@@ -316,7 +316,7 @@ export class DSA {
     params: {
       authority?: string
       origin?: string
-    } & Pick<TransactionRequest, 'from' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'gas' | 'nonce'>
+    } & Pick<TransactionRequest, 'from' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'gasLimit' | 'nonce'>
   ) {
     const defaultAddress = await this.internal.getAddress()
 
@@ -339,7 +339,7 @@ export class DSA {
       from: mergedParams.from,
       to,
       data,
-      gas: mergedParams.gas,
+      gas: mergedParams.gasLimit,
       gasPrice: mergedParams.gasPrice,
       maxFeePerGas: mergedParams.maxFeePerGas,
       maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
@@ -421,7 +421,7 @@ export class DSA {
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
       to: mergedParams.to,
-      gas: mergedParams.gas,
+      gas: mergedParams.gasLimit,
       gasPrice: mergedParams.gasPrice,
       maxFeePerGas: mergedParams.maxFeePerGas,
       maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
@@ -457,7 +457,7 @@ export class DSA {
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
       to: mergedParams.to,
-      gas: mergedParams.gas,
+      gas: mergedParams.gasLimit,
       gasPrice: mergedParams.gasPrice,
       maxFeePerGas: mergedParams.maxFeePerGas,
       maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,

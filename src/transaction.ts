@@ -6,7 +6,7 @@
 
 import { /* TransactionConfig, */ TransactionReceipt } from 'web3-core'
 import { Wallet } from '@ethersproject/wallet'
-import { TransactionRequest } from '@ethersproject/abstract-provider'
+import { TransactionRequest, TransactionResponse } from '@ethersproject/abstract-provider'
 import { Addresses } from './addresses'
 import { DSA } from './dsa'
 
@@ -30,34 +30,39 @@ export class Transaction {
       }
 
       if (this.dsa.config.mode == 'node') {
-        const wallet = new Wallet(this.dsa.config.privateKey)
-        const signedTransaction = await wallet.signTransaction(transactionConfig)
+        const signer = new Wallet(this.dsa.config.privateKey, this.dsa.config.provider)
         // const signedTransaction = await this.dsa.provider.getSigner().signTransaction(
         //   transactionConfig,
         //   this.dsa.config.privateKey
         // )
 
-        if (!signedTransaction) { throw new Error('Error while signing transaction. Please contact our support: https://docs.instadapp.io/') }
-        wallet.sendTransaction(transactionConfig).then((txHash: any) => {
-          resolve(txHash)
-          return txHash
+        // if (!signedTransaction) { throw new Error('Error while signing transaction. Please contact our support: https://docs.instadapp.io/') }
+        signer.sendTransaction(transactionConfig).then((transaction: TransactionResponse) => {
+          resolve(transaction.hash)
+          return transaction.hash
         }).catch((error: any) => {
           reject(error)
         })
       } else {
-        this.dsa.web3.eth.sendTransaction(transactionConfig).on('transactionHash', (txHash) => {
-          resolve(txHash)
-          return txHash
+        // this.dsa.web3.eth.sendTransaction(transactionConfig).on('transactionHash', (txHash) => {
+        //   resolve(txHash)
+        //   return txHash
+        // })
+        //   .on('receipt', (receipt) => {
+        //     transactionCallbacks.onReceipt && transactionCallbacks.onReceipt(receipt)
+        //   })
+        //   .on('confirmation', (confirmationNumber, receipt, latestBlockHash) => {
+        //     transactionCallbacks.onConfirmation && transactionCallbacks.onConfirmation(confirmationNumber, receipt, latestBlockHash)
+        //   })
+        //   .on('error', (error) => {
+        //     reject(error)
+        //   })
+        this.dsa.config.provider.getSigner().sendTransaction(transactionConfig).then((transaction: TransactionResponse) => {
+          resolve(transaction.hash)
+          return transaction.hash
+        }).catch((error: any) => {
+          reject(error)
         })
-          .on('receipt', (receipt) => {
-            transactionCallbacks.onReceipt && transactionCallbacks.onReceipt(receipt)
-          })
-          .on('confirmation', (confirmationNumber, receipt, latestBlockHash) => {
-            transactionCallbacks.onConfirmation && transactionCallbacks.onConfirmation(confirmationNumber, receipt, latestBlockHash)
-          })
-          .on('error', (error) => {
-            reject(error)
-          })
       }
     })
   }

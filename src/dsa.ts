@@ -10,7 +10,7 @@
 
 // import Web3 from 'provider'
 import { utils } from 'ethers'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { Contract } from '@ethersproject/contracts'
 // import { TransactionConfig } from 'web3-core'
@@ -29,17 +29,17 @@ import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
   | {
-    provider: JsonRpcProvider | JsonRpcProvider
+    provider: JsonRpcProvider | Web3Provider
     mode: 'node'
     privateKey: string
   }
   | {
-    provider: JsonRpcProvider | JsonRpcProvider
+    provider: JsonRpcProvider | Web3Provider
     mode: 'simulation'
     publicKey: string
   }
   | {
-    provider: JsonRpcProvider | JsonRpcProvider
+    provider: JsonRpcProvider | Web3Provider
     mode?: 'browser'
   }
 
@@ -166,7 +166,7 @@ export class DSA {
   /**
    * @param config A `provider` instance or a DSAConfig
    */
-  constructor(config: JsonRpcProvider | DSAConfig, chainId: ChainId = 1) {
+  constructor(config: JsonRpcProvider | Web3Provider | DSAConfig, chainId: ChainId = 1) {
     this.instance.chainId = chainId
     this.config = getDSAConfig(config)
     this.config.provider.getSigner().getChainId().then((_chainId: any) => {
@@ -508,14 +508,18 @@ export class DSA {
 
 // Used defined Typeguard
 // https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
-function isEthers(config: JsonRpcProvider | DSAConfig): config is JsonRpcProvider {
+function isJsonRpcProvider(config: JsonRpcProvider | DSAConfig): config is JsonRpcProvider {
   return !!(config as JsonRpcProvider).connection
+}
+
+function isWeb3Provider(config: Web3Provider | DSAConfig): config is Web3Provider {
+  return !!(config as Web3Provider).connection
 }
 
 function getDSAConfig(config: JsonRpcProvider | DSAConfig): DSAConfig {
   if (!config) throw new Error('Invalid config. Pass provider instance or DSAConfig.')
 
-  if (isEthers(config)) return { provider: config, mode: 'browser' }
+  if (isJsonRpcProvider(config) || isWeb3Provider(config)) return { provider: config, mode: 'browser' }
 
   if (!config.provider) throw new Error('Invalid config. Pass provider instance or DSAConfig.')
 

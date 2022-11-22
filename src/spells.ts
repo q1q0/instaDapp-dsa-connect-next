@@ -20,17 +20,17 @@ export type Spell = {
 export class Spells {
   data: Spell[] = []
 
-  add(spell: Spell) {
+  add (spell: Spell) {
     if (!spell.connector) {
-      throw new Error(`connector not defined.`)
+      throw new Error('connector not defined.')
     }
 
     if (!spell.method) {
-      throw new Error(`method not defined.`)
+      throw new Error('method not defined.')
     }
 
     if (!spell.args) {
-      throw new Error(`args not defined.`)
+      throw new Error('args not defined.')
     }
 
     this.data.push(spell)

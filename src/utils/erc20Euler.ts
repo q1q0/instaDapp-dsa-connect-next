@@ -6,7 +6,7 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
 // import { Contract } from 'web3-eth-contract'
 import { Contract } from '@ethersproject/contracts'
 import BigNumber from 'bignumber.js'
-import { BigNumber as EtherBigNum } from 'ethers'
+import { BigNumber as EtherBigNum, utils } from 'ethers'
 import { Abi } from '../abi'
 import { DSA } from '../dsa'
 import { Addresses } from '../addresses'
@@ -103,9 +103,8 @@ export class Erc20Euler {
       const contract: Contract = new Contract(params.to as string, Abi.basics.erc20Euler, this.dsa.config.provider.getSigner())
 
       if (['-1', this.dsa.maxValue].includes(params.amount)) {
-        await contract.methods
+        await contract
           .balanceOf(params.from)
-          .call()
           .then((bal: any) => (params.amount = bal))
           .catch((err: any) => {
             throw new Error(`Error while getting token balance: ${err}`)
@@ -113,9 +112,15 @@ export class Erc20Euler {
       } else {
         params.amount = EtherBigNum.from(params.amount).toString()
       }
-      const data: string = contract.methods
-        .transfer(toAddr, params.amount)
-        .encodeABI()
+      // const data: string = contract.methods
+      //   .transfer(toAddr, params.amount)
+      //   .encodeABI()
+
+      const ABI = [
+        'function transfer(address _to, uint256 _value)'
+      ]
+      const iface = new utils.Interface(ABI)
+      const data: string = iface.encodeFunctionData('transfer', [toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,
@@ -165,10 +170,16 @@ export class Erc20Euler {
     } else {
       const toAddr: string = params.to
       params.to = this.dsa.internal.filterAddress(params.token)
-      const contract = new Contract(params.to as string, Abi.basics.erc20Euler, this.dsa.config.provider.getSigner())
-      const data: string = contract.methods
-        .approveSubAccount(params.subAccountId, toAddr, params.amount)
-        .encodeABI()
+      // const contract = new Contract(params.to as string, Abi.basics.erc20Euler, this.dsa.config.provider.getSigner())
+      // const data: string = contract.methods
+      //   .approveSubAccount(params.subAccountId, toAddr, params.amount)
+      //   .encodeABI()
+
+      const ABI = [
+        'function approveSubAccount(uint256 subAccountId, address spender, uint256 amount)'
+      ]
+      const iface = new utils.Interface(ABI)
+      const data: string = iface.encodeFunctionData('approveSubAccount', [params.subAccountId, toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,

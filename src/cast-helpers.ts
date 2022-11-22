@@ -1,7 +1,8 @@
 /* eslint-disable no-useless-constructor */
 // import { TransactionRequest } from 'web3-core'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
-import { Contract } from '@ethersproject/contracts'
+import { utils } from 'ethers'
+// import { Contract } from '@ethersproject/contracts'
 import { Abi } from './abi'
 import { Addresses } from './addresses'
 import { Spells } from './spells'
@@ -75,11 +76,16 @@ export class CastHelpers {
       )
     }
 
-    const contract = new Contract(mergedParams.to as string, Abi.core.versions[this.dsa.instance.version].account, this.dsa.config.provider.getSigner())
+    // const contract = new Contract(mergedParams.to as string, Abi.core.versions[this.dsa.instance.version].account, this.dsa.config.provider.getSigner())
 
     const { targets, spells } = this.dsa.internal.encodeSpells(mergedParams.spells)
     // TODO @thrilok: check about return type.
-    const encodedAbi: string = contract.methods.cast(targets, spells, mergedParams.origin).encodeABI()
+    const ABI = [
+      'function cast(string[] _targetNames, bytes[] _datas, address _origin)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const encodedAbi: string = iface.encodeFunctionData('cast', [targets, spells, mergedParams.origin])
+    // const encodedAbi: string = contract.methods.cast(targets, spells, mergedParams.origin).encodeABI()
     return encodedAbi
   }
 

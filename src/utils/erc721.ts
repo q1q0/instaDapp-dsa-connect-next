@@ -4,6 +4,7 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 // import { Contract } from 'web3-eth-contract'
 import { Contract } from '@ethersproject/contracts'
+import { utils } from 'ethers'
 import { Abi } from '../abi'
 import { DSA } from '../dsa'
 import { Addresses } from '../addresses'
@@ -62,11 +63,17 @@ export class Erc721 {
 
     const toAddr: string = params.to
     params.to = this.dsa.internal.filterAddress(params.token)
-    const contract: Contract = new Contract(params.to as string, Abi.basics.erc721, this.dsa.config.provider.getSigner())
+    // const contract: Contract = new Contract(params.to as string, Abi.basics.erc721, this.dsa.config.provider.getSigner())
 
-    const data: string = contract.methods
-      .safeTransferFrom(params.from, toAddr, params.tokenId)
-      .encodeABI()
+    // const data: string = contract.methods
+    //   .safeTransferFrom(params.from, toAddr, params.tokenId)
+    //   .encodeABI()
+
+    const ABI = [
+      'function safeTransferFrom(address from, address to, uint256 tokenId)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('safeTransferFrom', [params.from, toAddr, params.tokenId])
 
     const txObj = await this.dsa.internal.getTransactionConfig({
       from: params.from,
@@ -105,10 +112,16 @@ export class Erc721 {
 
     const toAddr: string = params.to
     params.to = this.dsa.internal.filterAddress(params.token)
-    const contract = new Contract(params.to as string, Abi.basics.erc20, this.dsa.provider.getSigner())
-    const data: string = contract.methods
-      .approve(toAddr, params.tokenId)
-      .encodeABI()
+    // const contract = new Contract(params.to as string, Abi.basics.erc20, this.dsa.provider.getSigner())
+    // const data: string = contract.methods
+    //   .approve(toAddr, params.tokenId)
+    //   .encodeABI()
+
+    const ABI = [
+      'function approve(address _spender, uint256 _value)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('approve', [toAddr, params.tokenId])
 
     const txObj = await this.dsa.internal.getTransactionConfig({
       from: params.from,

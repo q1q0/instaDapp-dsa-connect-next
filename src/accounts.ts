@@ -14,7 +14,8 @@ export class Accounts {
    */
   count = async () => {
     const contract = new Contract(Addresses.core[this.dsa.instance.chainId].list, Abi.core.list, this.dsa.provider.getSigner())
-    const count = await contract.methods.accounts().call({ from: Addresses.genesis })
+    const count = await contract.accounts()
+    // const count = await contract.methods.accounts().call({ from: Addresses.genesis })
 
     return count
   }
@@ -29,11 +30,17 @@ export class Accounts {
     const contract = new Contract(Addresses.core[this.dsa.instance.chainId].read, Abi.core.read, this.dsa.provider.getSigner())
 
     // TODO: Check if type is correct here (string/number?)
+    // const authorityDetails: {
+    //   IDs: number[]
+    //   accounts: string[]
+    //   versions: number[]
+    // } = await contract.methods.getAuthorityDetails(address).call({ from: Addresses.genesis })
+
     const authorityDetails: {
       IDs: number[]
       accounts: string[]
       versions: number[]
-    } = await contract.methods.getAuthorityDetails(address).call({ from: Addresses.genesis })
+    } = await contract.getAuthorityDetails(address)
 
     const accounts = authorityDetails.IDs.map((id, index) => ({
       id,
@@ -62,7 +69,8 @@ export class Accounts {
     const contract = new Contract(Addresses.core[this.dsa.instance.chainId].read, Abi.core.read, this.dsa.provider.getSigner())
 
     // TODO: Return type instead of any?
-    const authorities: any = await contract.methods.getIDAuthorities(id).call({ from: Addresses.genesis })
+    const authorities: any = await contract.getIDAuthorities(id)
+    // const authorities: any = await contract.methods.getIDAuthorities(id).call({ from: Addresses.genesis })
 
     return authorities
   }
@@ -76,7 +84,8 @@ export class Accounts {
     const contract = new Contract(Addresses.core[this.dsa.instance.chainId].read, Abi.core.read, this.dsa.provider.getSigner())
 
     // TODO: Return type instead of any?
-    const authorities: any = await contract.methods.getAccountAuthorities(address).call({ from: Addresses.genesis })
+    const authorities: any = await contract.getAccountAuthorities(address)
+    // const authorities: any = await contract.methods.getAccountAuthorities(address).call({ from: Addresses.genesis })
 
     return authorities
   }
@@ -90,7 +99,8 @@ export class Accounts {
     const contract = new Contract(Addresses.core[this.dsa.instance.chainId].read, Abi.core.read, this.dsa.provider.getSigner())
 
     // TODO: Return type instead of any?
-    const authorities: any = contract.methods.getAccountAuthoritiesTypes(address).call({ from: Addresses.genesis })
+    const authorities: any = contract.getAccountAuthoritiesTypes(address)
+    // const authorities: any = contract.methods.getAccountAuthoritiesTypes(address).call({ from: Addresses.genesis })
 
     return authorities
   }

@@ -210,7 +210,8 @@ export class DSA {
   public async getAccountIdDetails(instanceId: Instance['id']) {
     try {
       const contract = new Contract(Addresses.core[this.instance.chainId].read, Abi.core.read, this.provider.getSigner())
-      const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
+      const [id, address, version] = await contract.getAccountIdDetails(instanceId)
+      // const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
       const chainId = await this.provider.getSigner().getChainId()
 
       return {
@@ -254,8 +255,14 @@ export class DSA {
     const mergedParams = Object.assign(defaults, params) as BuildParams
 
     const to = Addresses.core[this.instance.chainId].index
-    const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
-    const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
+    // const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
+    // const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
+
+    const ABI = [
+      'function build(address _owner, uint256 accountVersion, address _origin)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('build', [mergedParams.authority, mergedParams.version, mergedParams.origin])
 
     if (!mergedParams.from) throw new Error("Parameter 'from' is not defined.")
 
@@ -286,10 +293,16 @@ export class DSA {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
 
     const to = Addresses.core[this.instance.chainId].index
-    const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
-    const data = contract.methods
-      .build(params.authority, params.version || 2, params.origin || Addresses.genesis)
-      .encodeABI()
+    // const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
+    // const data = contract.methods
+    //   .build(params.authority, params.version || 2, params.origin || Addresses.genesis)
+    //   .encodeABI()
+
+    const ABI = [
+      'function build(address _owner, uint256 accountVersion, address _origin)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('build', [params.authority, params.version || 2, params.origin || Addresses.genesis])
 
     return this.internal.getTransactionConfig({
       from: params.from,
@@ -332,8 +345,14 @@ export class DSA {
 
     const to = Addresses.core[this.instance.chainId].index
 
-    const contracts = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
-    const data = contracts.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
+    // const contracts = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
+    // const data = contracts.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
+
+    const ABI = [
+      'function build(address _owner, uint256 accountVersion, address _origin)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('build', [mergedParams.authority, mergedParams.version, mergedParams.origin])
 
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
@@ -480,10 +499,16 @@ export class DSA {
   private async getData(params: { spells: Spells; origin?: string }) {
     const encodedSpells = this.internal.encodeSpells(params)
 
-    const contract = new Contract(this.instance.address, Abi.core.versions[this.instance.version].account, this.provider.getSigner())
-    const data = contract.methods
-      .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
-      .encodeABI()
+    // const contract = new Contract(this.instance.address, Abi.core.versions[this.instance.version].account, this.provider.getSigner())
+    // const data = contract.methods
+    //   .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
+    //   .encodeABI()
+
+    const ABI = [
+      'function cast(address[] _targets, bytes[] _datas, address _origin)'
+    ]
+    const iface = new utils.Interface(ABI)
+    const data: string = iface.encodeFunctionData('cast', [encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis])
 
     return data
   }

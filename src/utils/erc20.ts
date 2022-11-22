@@ -85,9 +85,8 @@ export class Erc20 {
       const contract: Contract = new Contract(params.to as string, Abi.basics.erc20, this.dsa.config.provider.getSigner())
 
       if (['-1', this.dsa.maxValue].includes(params.amount)) {
-        await contract.methods
+        await contract
           .balanceOf(params.from)
-          .call()
           .then((bal: any) => (params.amount = bal))
           .catch((err: any) => {
             throw new Error(`Error while getting token balance: ${err}`)
@@ -95,9 +94,14 @@ export class Erc20 {
       } else {
         params.amount = BigNumber.from(params.amount).toString()
       }
-      const data: string = contract.methods
-        .transfer(toAddr, params.amount)
-        .encodeABI()
+      const ABI = [
+        'function transfer(address _to, uint256 _value)'
+      ]
+      const iface = new utils.Interface(ABI)
+      const data: string = iface.encodeFunctionData('transfer', [toAddr, params.amount])
+      // const data: string = contract.methods
+      //   .transfer(toAddr, params.amount)
+      //   .encodeABI()
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,
@@ -142,10 +146,16 @@ export class Erc20 {
     } else {
       const toAddr: string = params.to
       params.to = this.dsa.internal.filterAddress(params.token)
-      const contract = new Contract(params.to as string, Abi.basics.erc20, this.dsa.config.provider.getSigner())
-      const data: string = contract.methods
-        .approve(toAddr, params.amount)
-        .encodeABI()
+      // const contract = new Contract(params.to as string, Abi.basics.erc20, this.dsa.config.provider.getSigner())
+      // const data: string = contract.methods
+      //   .approve(toAddr, params.amount)
+      //   .encodeABI()
+
+      const ABI = [
+        'function approve(address _spender, uint256 _value)'
+      ]
+      const iface = new utils.Interface(ABI)
+      const data: string = iface.encodeFunctionData('approve', [toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,

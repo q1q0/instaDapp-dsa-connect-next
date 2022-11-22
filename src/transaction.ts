@@ -4,9 +4,9 @@
 /* eslint-disable require-await */
 /* eslint-disable no-useless-constructor */
 
-import { /* TransactionConfig, */ TransactionReceipt } from 'web3-core'
+// import { /* TransactionConfig, */ TransactionReceipt } from 'web3-core'
 import { Wallet } from '@ethersproject/wallet'
-import { TransactionRequest, TransactionResponse } from '@ethersproject/abstract-provider'
+import { TransactionRequest, TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
 import { Addresses } from './addresses'
 import { DSA } from './dsa'
 
@@ -59,6 +59,10 @@ export class Transaction {
         //   })
         this.dsa.config.provider.getSigner().sendTransaction(transactionConfig).then((transaction: TransactionResponse) => {
           resolve(transaction.hash)
+          transaction.wait().then((receipt: TransactionReceipt) => {
+            transactionCallbacks.onReceipt && transactionCallbacks.onReceipt(receipt)
+            transactionCallbacks.onConfirmation && transactionCallbacks.onConfirmation(receipt.confirmations, receipt, receipt.blockHash)
+          })
           return transaction.hash
         }).catch((error: any) => {
           reject(error)

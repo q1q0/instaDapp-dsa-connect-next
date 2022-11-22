@@ -101,7 +101,7 @@ export class Internal {
   }
 
   private getGas = async (transactionConfig: Deferrable<TransactionRequest>) => {
-    return ((await this.dsa.provider.estimateGas(transactionConfig)).mul(BigNumber.from('1.1'))).toString() // increasing gas cost by 10% for margin
+    return ((await this.dsa.provider.estimateGas(transactionConfig)).mul(BigNumber.from('11'))).div(BigNumber.from('10')).toString() // increasing gas cost by 10% for margin
   }
 
   /**
@@ -134,8 +134,7 @@ export class Internal {
     const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) { throw new Error(`ConnectorInterface '${params.method}' not found`) }
-
-    const iface = new utils.Interface(connectorInterface)
+    const iface = new utils.Interface([connectorInterface])
     return iface.encodeFunctionData(connectorInterface.name, params.args)
   }
 
@@ -234,9 +233,13 @@ export class Internal {
    * @param params.value the call ETH value
    */
   estimateGas = async (params: EstimateGasParams) => {
-    const abi = params.abi as any
+    let abi = params.abi as any
+    const name = abi?.name
+    if (!Array.isArray(abi)) {
+      abi = [abi]
+    }
     const iface = new utils.Interface(abi)
-    const data = iface.encodeFunctionData(abi?.name, params.args)
+    const data = iface.encodeFunctionData(name, params.args)
 
     try {
       const estimatedGas = await this.dsa.provider.estimateGas({

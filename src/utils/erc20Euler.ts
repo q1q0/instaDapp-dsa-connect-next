@@ -116,11 +116,9 @@ export class Erc20Euler {
       //   .transfer(toAddr, params.amount)
       //   .encodeABI()
 
-      const ABI = [
-        'function transfer(address _to, uint256 _value)'
-      ]
-      const iface = new utils.Interface(ABI)
-      const data: string = iface.encodeFunctionData('transfer', [toAddr, params.amount])
+      const ABI = this.dsa.internal.getInterface(Abi.basics.erc20Euler as any, 'transfer')
+      const iface = new utils.Interface([ABI])
+      const data: string = iface.encodeFunctionData(ABI.name, [toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,
@@ -175,11 +173,9 @@ export class Erc20Euler {
       //   .approveSubAccount(params.subAccountId, toAddr, params.amount)
       //   .encodeABI()
 
-      const ABI = [
-        'function approveSubAccount(uint256 subAccountId, address spender, uint256 amount)'
-      ]
-      const iface = new utils.Interface(ABI)
-      const data: string = iface.encodeFunctionData('approveSubAccount', [params.subAccountId, toAddr, params.amount])
+      const ABI = this.dsa.internal.getInterface(Abi.basics.erc20Euler as any, 'approveSubAccount')
+      const iface = new utils.Interface([ABI])
+      const data: string = iface.encodeFunctionData(ABI.name, [params.subAccountId, toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,

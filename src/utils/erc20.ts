@@ -94,11 +94,10 @@ export class Erc20 {
       } else {
         params.amount = BigNumber.from(params.amount).toString()
       }
-      const ABI = [
-        'function transfer(address _to, uint256 _value)'
-      ]
-      const iface = new utils.Interface(ABI)
-      const data: string = iface.encodeFunctionData('transfer', [toAddr, params.amount])
+
+      const ABI = this.dsa.internal.getInterface(Abi.basics.erc20 as any, 'transfer')
+      const iface = new utils.Interface([ABI])
+      const data: string = iface.encodeFunctionData(ABI.name, [toAddr, params.amount])
       // const data: string = contract.methods
       //   .transfer(toAddr, params.amount)
       //   .encodeABI()
@@ -151,11 +150,9 @@ export class Erc20 {
       //   .approve(toAddr, params.amount)
       //   .encodeABI()
 
-      const ABI = [
-        'function approve(address _spender, uint256 _value)'
-      ]
-      const iface = new utils.Interface(ABI)
-      const data: string = iface.encodeFunctionData('approve', [toAddr, params.amount])
+      const ABI = this.dsa.internal.getInterface(Abi.basics.erc20 as any, 'approve')
+      const iface = new utils.Interface([ABI])
+      const data: string = iface.encodeFunctionData(ABI.name, [toAddr, params.amount])
 
       txObj = await this.dsa.internal.getTransactionConfig({
         from: params.from,

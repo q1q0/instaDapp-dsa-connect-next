@@ -67,7 +67,6 @@ export class CastHelpers {
       to: this.dsa.instance.address,
       origin: this.dsa.origin
     }
-
     const mergedParams = Object.assign(defaults, wrapIfSpells(params)) as EncodeAbiParams
 
     if (mergedParams.to === Addresses.genesis) {
@@ -80,11 +79,10 @@ export class CastHelpers {
 
     const { targets, spells } = this.dsa.internal.encodeSpells(mergedParams.spells)
     // TODO @thrilok: check about return type.
-    const ABI = [
-      'function cast(string[] _targetNames, bytes[] _datas, address _origin)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const encodedAbi: string = iface.encodeFunctionData('cast', [targets, spells, mergedParams.origin])
+
+    const ABI = this.dsa.internal.getInterface(Abi.core.versions[this.dsa.instance.version].account as any, 'cast')
+    const iface = new utils.Interface([ABI])
+    const encodedAbi: string = iface.encodeFunctionData(ABI.name, [targets, spells, mergedParams.origin])
     // const encodedAbi: string = contract.methods.cast(targets, spells, mergedParams.origin).encodeABI()
     return encodedAbi
   }

@@ -10,7 +10,7 @@
 
 // import Web3 from 'provider'
 import { utils } from 'ethers'
-import { Web3Provider, JsonRpcProvider } from '@ethersproject/providers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { Contract } from '@ethersproject/contracts'
 // import { TransactionConfig } from 'web3-core'
@@ -29,17 +29,17 @@ import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
   | {
-    provider: Web3Provider | JsonRpcProvider
+    provider: JsonRpcProvider | JsonRpcProvider
     mode: 'node'
     privateKey: string
   }
   | {
-    provider: Web3Provider | JsonRpcProvider
+    provider: JsonRpcProvider | JsonRpcProvider
     mode: 'simulation'
     publicKey: string
   }
   | {
-    provider: Web3Provider | JsonRpcProvider
+    provider: JsonRpcProvider | JsonRpcProvider
     mode?: 'browser'
   }
 
@@ -166,7 +166,7 @@ export class DSA {
   /**
    * @param config A `provider` instance or a DSAConfig
    */
-  constructor(config: Web3Provider | DSAConfig, chainId: ChainId = 1) {
+  constructor(config: JsonRpcProvider | DSAConfig, chainId: ChainId = 1) {
     this.instance.chainId = chainId
     this.config = getDSAConfig(config)
     this.config.provider.getSigner().getChainId().then((_chainId: any) => {
@@ -258,11 +258,9 @@ export class DSA {
     // const contract = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
     // const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
-    const ABI = [
-      'function build(address _owner, uint256 accountVersion, address _origin)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('build', [mergedParams.authority, mergedParams.version, mergedParams.origin])
+    const ABI = this.internal.getInterface(Abi.core.index as any, 'build')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [mergedParams.authority, mergedParams.version, mergedParams.origin])
 
     if (!mergedParams.from) throw new Error("Parameter 'from' is not defined.")
 
@@ -298,11 +296,9 @@ export class DSA {
     //   .build(params.authority, params.version || 2, params.origin || Addresses.genesis)
     //   .encodeABI()
 
-    const ABI = [
-      'function build(address _owner, uint256 accountVersion, address _origin)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('build', [params.authority, params.version || 2, params.origin || Addresses.genesis])
+    const ABI = this.internal.getInterface(Abi.core.index as any, 'build')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [params.authority, params.version || 2, params.origin || Addresses.genesis])
 
     return this.internal.getTransactionConfig({
       from: params.from,
@@ -348,11 +344,9 @@ export class DSA {
     // const contracts = new Contract(Addresses.core[this.instance.chainId].index, Abi.core.index, this.provider.getSigner())
     // const data = contracts.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
-    const ABI = [
-      'function build(address _owner, uint256 accountVersion, address _origin)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('build', [mergedParams.authority, mergedParams.version, mergedParams.origin])
+    const ABI = this.internal.getInterface(Abi.core.index as any, 'build')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [mergedParams.authority, mergedParams.version, mergedParams.origin])
 
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
@@ -504,11 +498,9 @@ export class DSA {
     //   .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
     //   .encodeABI()
 
-    const ABI = [
-      'function cast(address[] _targets, bytes[] _datas, address _origin)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('cast', [encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis])
+    const ABI = this.internal.getInterface(Abi.core.versions[this.instance.version].account as any, 'cast')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis])
 
     return data
   }
@@ -516,11 +508,11 @@ export class DSA {
 
 // Used defined Typeguard
 // https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
-function isEthers(config: Web3Provider | DSAConfig): config is Web3Provider {
-  return !!(config as Web3Provider).connection
+function isEthers(config: JsonRpcProvider | DSAConfig): config is JsonRpcProvider {
+  return !!(config as JsonRpcProvider).connection
 }
 
-function getDSAConfig(config: Web3Provider | DSAConfig): DSAConfig {
+function getDSAConfig(config: JsonRpcProvider | DSAConfig): DSAConfig {
   if (!config) throw new Error('Invalid config. Pass provider instance or DSAConfig.')
 
   if (isEthers(config)) return { provider: config, mode: 'browser' }

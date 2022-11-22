@@ -69,11 +69,9 @@ export class Erc721 {
     //   .safeTransferFrom(params.from, toAddr, params.tokenId)
     //   .encodeABI()
 
-    const ABI = [
-      'function safeTransferFrom(address from, address to, uint256 tokenId)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('safeTransferFrom', [params.from, toAddr, params.tokenId])
+    const ABI = this.dsa.internal.getInterface(Abi.basics.erc721 as any, 'safeTransferFrom')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [params.from, toAddr, params.tokenId])
 
     const txObj = await this.dsa.internal.getTransactionConfig({
       from: params.from,
@@ -117,11 +115,9 @@ export class Erc721 {
     //   .approve(toAddr, params.tokenId)
     //   .encodeABI()
 
-    const ABI = [
-      'function approve(address _spender, uint256 _value)'
-    ]
-    const iface = new utils.Interface(ABI)
-    const data: string = iface.encodeFunctionData('approve', [toAddr, params.tokenId])
+    const ABI = this.dsa.internal.getInterface(Abi.basics.erc20 as any, 'approve')
+    const iface = new utils.Interface([ABI])
+    const data: string = iface.encodeFunctionData(ABI.name, [toAddr, params.tokenId])
 
     const txObj = await this.dsa.internal.getTransactionConfig({
       from: params.from,

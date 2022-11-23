@@ -7,13 +7,20 @@ import { TokenInfo, connectorsV2Map } from './data'
 const connectorsV2MapList = connectorsV2Map.default;
 
 export {
-  DSAConfig,
-  ChainId,
-  Instance,
-  Spell,
   DSA,
+  // DSAConfig,
+  // ChainId,
+  // Instance,
+  // Spell,
   Abi,
   Addresses,
   TokenInfo,
   connectorsV2MapList
+}
+
+export type {
+  DSAConfig,
+  ChainId,
+  Instance,
+  Spell
 }

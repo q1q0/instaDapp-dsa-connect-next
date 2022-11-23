@@ -27,17 +27,15 @@ import { Erc20Euler } from './utils/erc20Euler'
 import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
-  | {
+  {
     provider: JsonRpcProvider | Web3Provider
     mode: 'node'
     privateKey: string
-  }
-  | {
+  } | {
     provider: JsonRpcProvider | Web3Provider
     mode: 'simulation'
     publicKey: string
-  }
-  | {
+  } | {
     provider: JsonRpcProvider | Web3Provider
     mode?: 'browser'
   }

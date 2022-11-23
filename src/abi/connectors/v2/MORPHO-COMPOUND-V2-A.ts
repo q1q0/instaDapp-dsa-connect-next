@@ -1,6 +1,7 @@
-import {
-    AbiItem
-} from 'web3-utils'
+// import {
+//     AbiItem
+// } from 'web3-utils'
+import { ContractInterface } from '@ethersproject/contracts'
 
 export const MORPHO_COMPOUND_V2_A: ContractInterface = [{
     "anonymous": false,

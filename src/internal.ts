@@ -8,15 +8,13 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { Wallet } from '@ethersproject/wallet'
 // import { AbiItem } from 'web3-utils'
 import { ContractInterface } from '@ethersproject/contracts'
-import { Abi } from './abi'
 import { Connector } from './abi/connectors'
-import { Addresses } from './addresses'
 import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
 import { hasKey } from './utils/typeHelper'
 import connectorV2Mapping from './data/connectorsV2_M1_mapping'
-import DSA from '.'
+import { DSA, Abi, Addresses } from '.'
 
 export interface GetTransactionConfigParams {
   from: NonNullable<TransactionRequest['from']>

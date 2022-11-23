@@ -5,12 +5,9 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { Contract } from '@ethersproject/contracts'
 import { utils, BigNumber } from 'ethers'
 // import { Contract } from 'web3-eth-contract'
-import { Abi } from '../abi'
-import { DSA } from '../dsa'
-import { Addresses } from '../addresses'
+import { DSA, Abi, Addresses } from '../'
 import { TokenInfo } from '../data/token-info'
 import { GetTransactionConfigParams } from '../internal'
-import * as Math from './math'
 
 /**
  * @param {address} _d.token token address or symbol

@@ -2,9 +2,7 @@
 /* eslint-disable no-useless-constructor */
 import { Contract } from '@ethersproject/contracts'
 import { utils } from 'ethers'
-import { Abi } from './abi'
-import { Addresses } from './addresses'
-import { DSA } from './dsa'
+import { DSA, Abi, Addresses } from '.'
 
 export class Accounts {
   constructor (private dsa: DSA) {}

@@ -88,9 +88,10 @@ export class CastHelpers {
   flashBorrowSpellsConvert = (params: Spells): Spells => {
     const arr = params.data
     const spellsLength = arr.length
-    const spells = this.dsa.Spell()
+    // const spells = this.dsa.Spell()
+    const spells = new Spells(this.dsa)
     const flashBorrowArgs = []
-    let spells2 = this.dsa.Spell()
+    let spells2 = new Spells(this.dsa)
     let isFlashloanPool = false
     for (let i = 0; i < spellsLength; i++) {
       const a = arr[i]
@@ -101,7 +102,8 @@ export class CastHelpers {
       }
 
       if (a.connector === 'instapool_v2' && a.method === 'flashBorrow' && isFlashloanPool) {
-        const subSpells = this.dsa.Spell()
+        // const subSpells = this.dsa.Spell()
+        const subSpells = new Spells(this.dsa)
         arr.slice(i, spellsLength).forEach(b => subSpells.add(b))
 
         const encodedFlashloanSpells = this.flashBorrowSpellsConvert(subSpells)
@@ -122,7 +124,8 @@ export class CastHelpers {
           args: [...flashBorrowArgs, encodedSpells]
         })
 
-        spells2 = this.dsa.Spell()
+        spells2 = new Spells(this.dsa)
+        // spells2 = this.dsa.Spell()
         continue
       }
 

@@ -64,7 +64,7 @@ export interface Instance {
  * @param _d.gas (optional)
  * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
  */
-type CastParams = {
+export type CastParams = {
   spells: Spells
   origin?: string
 } & TransactionCallbacks &
@@ -373,48 +373,48 @@ export class DSA {
    *  .cast(...)
    * ```
    */
-  public Spell() {
-    const vm = this
+  // public Spell() {
+  //   const vm = this
 
-    // Add cast functionality for fluid API through anonymous class.
-    return new (class extends Spells {
-      constructor() {
-        super()
-      }
+  //   // Add cast functionality for fluid API through anonymous class.
+  //   return new (class extends Spells {
+  //     constructor() {
+  //       super()
+  //     }
 
-      cast = async (params?: Omit<CastParams, 'spells'>) => {
-        if (!this.data.length) {
-          console.log('No spells casted. Add spells with `.add(...)`.')
-          return
-        }
-        return await vm.cast(!!params ? { ...params, spells: this } : this)
-      }
+  //     cast = async (params?: Omit<CastParams, 'spells'>) => {
+  //       if (!this.data.length) {
+  //         console.log('No spells casted. Add spells with `.add(...)`.')
+  //         return
+  //       }
+  //       return await vm.cast(!!params ? { ...params, spells: this } : this)
+  //     }
 
-      estimateCastGas = async (params?: Omit<CastHelpers['estimateGas'], 'spells'>) => {
-        if (!this.data.length) {
-          console.log('No spells casted. Add spells with `.add(...)`.')
-          return
-        }
-        return await vm.castHelpers.estimateGas({ spells: this, ...params })
-      }
+  //     estimateCastGas = async (params?: Omit<CastHelpers['estimateGas'], 'spells'>) => {
+  //       if (!this.data.length) {
+  //         console.log('No spells casted. Add spells with `.add(...)`.')
+  //         return
+  //       }
+  //       return await vm.castHelpers.estimateGas({ spells: this, ...params })
+  //     }
 
-      encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
-        if (!this.data.length) {
-          console.log('No spells casted. Add spells with `.add(...)`.')
-          return
-        }
-        return await vm.encodeCastABI({ spells: this, ...params })
-      }
+  //     encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
+  //       if (!this.data.length) {
+  //         console.log('No spells casted. Add spells with `.add(...)`.')
+  //         return
+  //       }
+  //       return await vm.encodeCastABI({ spells: this, ...params })
+  //     }
 
-      encodeSpells = async (params?: Omit<Internal['encodeSpells'], 'spells'>) => {
-        if (!this.data.length) {
-          console.log('No spells casted. Add spells with `.add(...)`.')
-          return
-        }
-        return await vm.encodeSpells({ spells: this, ...params })
-      }
-    })()
-  }
+  //     encodeSpells = async (params?: Omit<Internal['encodeSpells'], 'spells'>) => {
+  //       if (!this.data.length) {
+  //         console.log('No spells casted. Add spells with `.add(...)`.')
+  //         return
+  //       }
+  //       return await vm.encodeSpells({ spells: this, ...params })
+  //     }
+  //   })()
+  // }
 
   async cast(params: Spells | CastParams) {
     const defaults = {

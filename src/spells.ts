@@ -1,4 +1,6 @@
-import { Connector } from './internal'
+import { CastHelpers } from './cast-helpers'
+import { CastParams, DSA } from './dsa'
+import { Connector, Internal } from './internal'
 
 export type Spell = {
   /**
@@ -18,6 +20,7 @@ export type Spell = {
 }
 
 export class Spells {
+  constructor (private dsa: DSA) { }
   data: Spell[] = []
 
   add (spell: Spell) {
@@ -36,5 +39,37 @@ export class Spells {
     this.data.push(spell)
 
     return this
+  }
+
+  cast = async (params?: Omit<CastParams, 'spells'>) => {
+    if (!this.data.length) {
+      console.log('No spells casted. Add spells with `.add(...)`.')
+      return
+    }
+    return await this.dsa.cast(!!params ? { ...params, spells: this } : this)
+  }
+
+  estimateCastGas = async (params?: Omit<CastHelpers['estimateGas'], 'spells'>) => {
+    if (!this.data.length) {
+      console.log('No spells casted. Add spells with `.add(...)`.')
+      return
+    }
+    return await this.dsa.castHelpers.estimateGas({ spells: this, ...params })
+  }
+
+  encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
+    if (!this.data.length) {
+      console.log('No spells casted. Add spells with `.add(...)`.')
+      return
+    }
+    return await this.dsa.encodeCastABI({ spells: this, ...params })
+  }
+
+  encodeSpells = async (params?: Omit<Internal['encodeSpells'], 'spells'>) => {
+    if (!this.data.length) {
+      console.log('No spells casted. Add spells with `.add(...)`.')
+      return
+    }
+    return await this.dsa.encodeSpells({ spells: this, ...params })
   }
 }

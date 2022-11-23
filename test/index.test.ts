@@ -9,12 +9,14 @@ import { utils } from 'ethers'
 // import '@nomiclabs/hardhat-ethers'
 // import '@nomiclabs/hardhat-web3'
 import { DSA, TokenInfo } from '../src'
+import { Spells } from '../src/spells'
 
 config()
 
 let web3: JsonRpcProvider
 let dsa: DSA
 let account: string
+let spells: Spells
 
 const ethAddr = TokenInfo.eth.address
 const usdcAddr = TokenInfo.usdc.address
@@ -57,7 +59,8 @@ describe('DSA v1', function () {
   it('Cast with flashloan', async () => {
     const usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'withdraw',
@@ -83,8 +86,8 @@ describe('DSA v1', function () {
   })
 
   it('Cast with flashloan with multiple', async () => {
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'withdraw',
@@ -147,7 +150,8 @@ describe('DSA v1', function () {
   })
 
   it('Swap 1 ETH to USDC', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -163,8 +167,8 @@ describe('DSA v1', function () {
   })
 
   it('Withdraw USDC from DSA', async () => {
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'withdraw',
@@ -186,8 +190,8 @@ describe('DSA v1', function () {
     }
     await dsa.erc20.approve(data)
 
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'deposit',
@@ -202,7 +206,8 @@ describe('DSA v1', function () {
   })
 
   it('Swap 1 ETH to USDC #2', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -218,7 +223,8 @@ describe('DSA v1', function () {
   })
 
   it('Deposit ETH to Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'compound',
@@ -234,7 +240,8 @@ describe('DSA v1', function () {
   })
 
   it('Borrow DAI from Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('10', 'ether')
     spells.add({
       connector: 'compound',
@@ -250,7 +257,8 @@ describe('DSA v1', function () {
   })
 
   it('Payback DAI to Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('10', 'ether')
     spells.add({
       connector: 'compound',
@@ -266,7 +274,8 @@ describe('DSA v1', function () {
   })
 
   it('Withdraw ETH from Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('0.9', 'ether')
     spells.add({
       connector: 'compound',
@@ -282,7 +291,8 @@ describe('DSA v1', function () {
   })
 
   it('Swap 1 ETH to DAI', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -298,7 +308,8 @@ describe('DSA v1', function () {
   })
 
   it('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     const amt2 = utils.parseUnits('100', 'ether')
     spells.add({
@@ -330,7 +341,8 @@ describe('DSA v1', function () {
   })
 
   it('Object-oriented Spells', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
 
     spells.add({
       connector: 'basic',
@@ -349,7 +361,8 @@ describe('DSA v1', function () {
   })
 
   it('Swap 1 ETH to USDC #3', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -365,8 +378,8 @@ describe('DSA v1', function () {
   })
 
   it('Cast with fluid api', async () => {
-    const txHash = await dsa
-      .Spell()
+    spells = new Spells(dsa)
+    const txHash = await spells
       .add({
         connector: 'basic',
         method: 'withdraw',
@@ -384,7 +397,8 @@ describe('DSA v1', function () {
   })
 
   it('Swap 1 ETH to USDC #4', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -461,7 +475,8 @@ describe('DSA v2', function () {
   })
 
   it('Swap 1 ETH to USDC', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -477,7 +492,8 @@ describe('DSA v2', function () {
   })
 
   it("Swap 1 ETH to USDC (Spell: '1INCH-A')", async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: '1INCH-A',
@@ -501,7 +517,8 @@ describe('DSA v2', function () {
   })
 
   it("Swap 1 ETH to USDC (Spell: '1INCH-A')", async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'oneInch',
@@ -526,8 +543,8 @@ describe('DSA v2', function () {
   })
 
   it('Withdraw USDC from DSA', async () => {
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'withdraw',
@@ -549,8 +566,8 @@ describe('DSA v2', function () {
     }
     await dsa.erc20.approve(data)
 
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'deposit',
@@ -565,7 +582,8 @@ describe('DSA v2', function () {
   })
 
   it('Swap 1 ETH to USDC #2', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -583,8 +601,8 @@ describe('DSA v2', function () {
   it('Cast with flashloan', async () => {
     const usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 
-    const spells = dsa.Spell()
-
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     spells.add({
       connector: 'basic',
       method: 'withdraw',
@@ -610,7 +628,8 @@ describe('DSA v2', function () {
   })
 
   it('Deposit ETH to Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'COMPOUND-A',
@@ -626,7 +645,8 @@ describe('DSA v2', function () {
   })
 
   it('Borrow DAI from Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('10', 'ether')
     spells.add({
       connector: 'compound',
@@ -642,7 +662,8 @@ describe('DSA v2', function () {
   })
 
   it('Payback DAI to Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('10', 'ether')
     spells.add({
       connector: 'compound',
@@ -658,7 +679,8 @@ describe('DSA v2', function () {
   })
 
   it('Withdraw ETH from Compound', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('0.9', 'ether')
     spells.add({
       connector: 'compound',
@@ -674,7 +696,8 @@ describe('DSA v2', function () {
   })
 
   it('Swap 1 ETH to DAI', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -690,7 +713,8 @@ describe('DSA v2', function () {
   })
 
   it('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     const amt2 = utils.parseUnits('100', 'ether')
     spells.add({
@@ -722,7 +746,8 @@ describe('DSA v2', function () {
   })
 
   it('Object-oriented Spells', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
 
     spells.add({
       connector: 'basic',
@@ -741,7 +766,8 @@ describe('DSA v2', function () {
   })
 
   it('Swap 1 ETH to USDC #3', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -757,8 +783,8 @@ describe('DSA v2', function () {
   })
 
   it('Cast with fluid api', async () => {
-    const txHash = await dsa
-      .Spell()
+    spells = new Spells(dsa)
+    const txHash = spells
       .add({
         connector: 'basic',
         method: 'withdraw',
@@ -776,7 +802,8 @@ describe('DSA v2', function () {
   })
 
   it('Swap 1 ETH to USDC #4', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',
@@ -821,7 +848,8 @@ describe('DSA v2', function () {
 
 describe('Transaction', function () {
   it('Should notify on receipt', async () => {
-    const spells = dsa.Spell()
+    // const spells = dsa.Spell()
+    spells = new Spells(dsa)
     const amt = utils.parseUnits('1', 'ether')
     spells.add({
       connector: 'uniswap',

@@ -8,7 +8,7 @@ import { utils } from 'ethers'
 // import hre from 'hardhat'
 // import '@nomiclabs/hardhat-ethers'
 // import '@nomiclabs/hardhat-web3'
-import DSA from '../src'
+import { DSA, TokenInfo } from '../src'
 
 config()
 
@@ -16,9 +16,9 @@ let web3: JsonRpcProvider
 let dsa: DSA
 let account: string
 
-const ethAddr = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-const daiAddr = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+const ethAddr = TokenInfo.eth.address
+const usdcAddr = TokenInfo.usdc.address
+const daiAddr = TokenInfo.dai.address
 
 beforeAll(() => {
   web3 = new JsonRpcProvider('http://localhost:8545')

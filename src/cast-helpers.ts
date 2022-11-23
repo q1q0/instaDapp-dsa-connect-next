@@ -3,11 +3,9 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { utils } from 'ethers'
 // import { Contract } from '@ethersproject/contracts'
-import { Abi } from './abi'
-import { Addresses } from './addresses'
 import { Spells } from './spells'
 import { wrapIfSpells } from './utils'
-import DSA from '.'
+import { DSA, Abi, Addresses } from '.'
 
 type EncodeAbiParams = {
   spells: Spells

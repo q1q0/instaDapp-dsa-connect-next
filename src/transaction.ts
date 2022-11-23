@@ -7,8 +7,7 @@
 // import { /* TransactionConfig, */ TransactionReceipt } from 'web3-core'
 import { Wallet } from '@ethersproject/wallet'
 import { TransactionRequest, TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
-import { Addresses } from './addresses'
-import { DSA } from './dsa'
+import { DSA, Addresses } from './'
 
 export interface TransactionCallbacks {
   onReceipt?: (receipt: TransactionReceipt) => void
